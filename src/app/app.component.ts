@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { AwsService } from './core/aws-service.service';
+import { Username } from './shared/models';
+
 
 @Component({
   selector: 'userflip-root',
@@ -7,4 +10,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'userflip';
+  un: any;
+  topOffer: string
+
+  constructor(private awsService: AwsService) {}
+
+  ngOnInit() {
+    this.awsService.getUsername('coolname')
+    .subscribe((username: any) => { 
+      if (username.body) {
+        this.un = JSON.parse(username.body);
+      }
+    });
+
+  }
+ 
 }
